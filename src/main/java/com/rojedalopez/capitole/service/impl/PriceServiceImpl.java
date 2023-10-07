@@ -3,6 +3,7 @@ package com.rojedalopez.capitole.service.impl;
 import com.rojedalopez.capitole.domain.dto.PriceDto;
 import com.rojedalopez.capitole.domain.dto.PriceRequestDto;
 import com.rojedalopez.capitole.domain.dto.PriceResponseDto;
+import com.rojedalopez.capitole.domain.exception.PriceException;
 import com.rojedalopez.capitole.domain.mapper.PriceMapper;
 import com.rojedalopez.capitole.infrestructure.jpa.PriceEntity;
 import com.rojedalopez.capitole.infrestructure.jpa.repositories.BrandRepository;
@@ -38,7 +39,8 @@ public class PriceServiceImpl implements PriceService {
     return RxJava3Adapter.monoToSingle(
         prices.findByFilters(requestDto.getProductId(), requestDto.getDateTime())
             .sort(Comparator.comparingInt(PriceEntity::getPriority))
-            .switchIfEmpty(Mono.defer(() -> Mono.error(new Exception("No se encuentra precio"))))
+            .switchIfEmpty(Mono.defer(() ->
+                Mono.error(new PriceException("404","No se encuentra precio"))))
             .last()
             .flatMap(entity -> brands.findById(Long.valueOf(entity.getBrandId()))
                 .map(mono -> {
