@@ -5,6 +5,7 @@ import com.rojedalopez.capitole.domain.dto.PriceRequestDto;
 import com.rojedalopez.capitole.domain.dto.PriceResponseDto;
 import com.rojedalopez.capitole.domain.mapper.PriceMapper;
 import com.rojedalopez.capitole.infrestructure.jpa.PriceEntity;
+import com.rojedalopez.capitole.infrestructure.jpa.repositories.BrandRepository;
 import com.rojedalopez.capitole.infrestructure.jpa.repositories.PriceRepository;
 import com.rojedalopez.capitole.service.PriceService;
 import io.reactivex.rxjava3.core.Flowable;
@@ -23,6 +24,7 @@ import reactor.core.publisher.Mono;
 public class PriceServiceImpl implements PriceService {
 
   private final PriceRepository prices;
+  private final BrandRepository brands;
   private final PriceMapper priceMapper;
 
   @Override
@@ -38,7 +40,13 @@ public class PriceServiceImpl implements PriceService {
             .sort(Comparator.comparingInt(PriceEntity::getPriority))
             .switchIfEmpty(Mono.defer(() -> Mono.error(new Exception("No se encuentra precio"))))
             .last()
+            .flatMap(entity -> brands.findById(Long.valueOf(entity.getBrandId()))
+                .map(mono -> {
+                  entity.setBrand(mono);
+                  return entity;
+                }))
             .map(priceMapper::toResponseDto)
+
     );
   }
 }

@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 public class PriceResponseDto {
   @JsonProperty("product_id")
   private String productId;
-  @JsonProperty("brand_id")
-  private String brandId;
+  @JsonProperty("brand")
+  private BrandDto brand;
   private BigDecimal price;
   @JsonProperty("price_list")
   private int priceList;
