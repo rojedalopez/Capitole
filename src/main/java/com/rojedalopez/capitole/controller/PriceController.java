@@ -5,6 +5,7 @@ import com.rojedalopez.capitole.domain.dto.PriceRequestDto;
 import com.rojedalopez.capitole.domain.dto.PriceResponseDto;
 import com.rojedalopez.capitole.service.PriceService;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class PriceController {
   private final PriceService priceService;
 
   @GetMapping
-  public Flowable<PriceDto> getAll() {
+  public Observable<PriceDto> getAll() {
     return priceService.get();
   }
 

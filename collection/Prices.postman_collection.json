@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "7579f168-fa4f-4457-90fc-65505bd28bf4",
+		"name": "Prices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25131863"
+	},
+	"item": [
+		{
+			"name": "GET - get All Books Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/prices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - get All Books Copy 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date_time\":\"2020-06-14T10:00:00\",\n    \"product_id\":\"35455\",\n    \"brand_id\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/prices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"prices"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

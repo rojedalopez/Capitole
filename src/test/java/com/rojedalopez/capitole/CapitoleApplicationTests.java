@@ -1,6 +1,7 @@
 package com.rojedalopez.capitole;
 
 import com.rojedalopez.capitole.controller.PriceController;
+import com.rojedalopez.capitole.domain.dto.PriceDto;
 import com.rojedalopez.capitole.domain.dto.PriceRequestDto;
 import com.rojedalopez.capitole.domain.dto.PriceResponseDto;
 import com.rojedalopez.capitole.domain.exception.PriceException;
@@ -15,6 +16,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CapitoleApplicationTests {
 	@Autowired
 	private PriceController controller;
+
+	@Test
+	void testFindAll() throws Exception {
+
+		TestObserver<PriceDto> response = controller.getAll().test();
+		response.await();
+		response.assertNoErrors();
+		response.assertComplete();
+		response.assertValueCount(4);
+	}
 
 	@Test
 	void test1() throws Exception {
@@ -132,7 +143,7 @@ class CapitoleApplicationTests {
 	}
 
 	@Test
-	void test6() throws Exception {
+	void test1Error() throws Exception {
 
 		var request = PriceRequestDto.builder()
 				.brandId(1)
@@ -147,7 +158,7 @@ class CapitoleApplicationTests {
 	}
 
 	@Test
-	void test7() throws Exception {
+	void test2Error() throws Exception {
 
 		var request = PriceRequestDto.builder()
 				.brandId(1)
@@ -160,6 +171,5 @@ class CapitoleApplicationTests {
 		response.await();
 		response.assertError(PriceException.class);
 	}
-
 
 }

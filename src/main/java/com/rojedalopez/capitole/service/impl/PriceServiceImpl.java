@@ -10,6 +10,7 @@ import com.rojedalopez.capitole.infrestructure.jpa.repositories.BrandRepository;
 import com.rojedalopez.capitole.infrestructure.jpa.repositories.PriceRepository;
 import com.rojedalopez.capitole.service.PriceService;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import java.util.Comparator;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,10 @@ public class PriceServiceImpl implements PriceService {
   private final PriceMapper priceMapper;
 
   @Override
-  public Flowable<PriceDto> get() {
-    return Flowable.fromIterable(prices.findAll().toIterable())
-        .map(priceMapper::toDto);
+  public Observable<PriceDto> get() {
+    return RxJava3Adapter.fluxToObservable(
+            prices.findAll()
+            .map(priceMapper::toDto));
   }
 
   @Override
